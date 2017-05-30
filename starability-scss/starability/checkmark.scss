@@ -36,6 +36,7 @@
   > label:before {
     @include starability-animation-base($img-checkmark, $img-checkmark-2x);
     background-image: $img-checkmark;
+    background-size: $star-size auto;
     right: -$star-size;
   }
 
