@@ -3,6 +3,7 @@
   width: $star-count * $star-size;
   height: $star-size;
   background-image: $img-stars-sprite;
+  background-size: $star-size auto;
   font-size: 0.1em;
   color: transparent;
 
@@ -12,6 +13,7 @@
     left: 0;
     height: $star-size;
     background-image: $img-stars-sprite;
+    background-size: $star-size auto;
     background-position: 0 (-$star-size);
   }
 

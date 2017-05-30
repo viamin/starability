@@ -41,11 +41,11 @@
     color: transparent;
     cursor: pointer;
     background-image: $img-stars-sprite;
+    background-size: $star-size auto;
     background-repeat: no-repeat;
 
     @media screen and (min-resolution: 192dpi) {
       background-image: $img-stars-sprite-2x;
-      background-size: $star-size auto;
     }
   }
 }
@@ -57,10 +57,10 @@
   width: $star-size;
   height:  $star-size;
   background-image: $img-animated;
+  background-size: $star-size auto;
   background-repeat: no-repeat;
 
   @media screen and (min-resolution: 192dpi) {
     background-image: $img-animated-2x;
-    background-size: $star-size auto;
   }
 }
