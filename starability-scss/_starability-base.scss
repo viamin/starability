@@ -63,6 +63,7 @@
       position: absolute;
       display: block;
       height: $star-size;
+      background-size: $star-size auto;
       background-image: $img-stars-sprite;
       background-position: 0 $star-size;
       pointer-events: none;
