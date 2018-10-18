@@ -24,16 +24,20 @@
     background-position: 0 (-$star-size);
   }
 
+  > input[disabled]:hover + label {
+    cursor: default;
+  }
+
   @if ($hover-enabled) {
-    > input:hover ~ label {
+    > input:not([disabled]):hover ~ label {
       background-position: 0 0;
     }
 
-    > input:hover + label {
+    > input:not([disabled]):hover + label {
       background-position: 0 (-$star-size);
     }
 
-    > input:hover + label::before {
+    > input:not([disabled]):hover + label::before {
       opacity: 1;
     }
   }
@@ -41,6 +45,22 @@
   @if ($accessible-highlight) {
     > input:focus + label {
       outline: 1px dotted #999;
+    }
+  }
+
+  @if ($accessible-focus-ring) {
+    .starability-focus-ring {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: $star-size;
+      outline: 2px dotted #999;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    > .input-no-rate:focus ~ .starability-focus-ring {
+      opacity: 1;
     }
   }
 
@@ -89,6 +109,40 @@
 
     @media screen and (min-resolution: 192dpi) {
       background-image: $img-stars-sprite-2x;
+      background-size: $star-size auto;
+    }
+  }
+
+  @if ($high-contrast-enabled) {
+
+    // To make the rating widget accessible in high contrast, we remove the styling.
+    @media screen and (-ms-high-contrast: active) {
+      width: auto;
+
+      > input {
+        position: static;
+        margin-right: 0;
+        opacity: 1;
+      }
+
+      .input-no-rate {
+        display: none;
+      }
+
+      > label {
+        display: inline;
+        float: none;
+        width: auto;
+        height: auto;
+        font-size: 1em;
+        color: inherit;
+        background: none;
+
+        &::before,
+        &::after {
+          display: none;
+        }
+      }
     }
   }
 }
@@ -96,7 +150,7 @@
 @mixin starability-animation-base($img-animated: $img-stars-sprite, $img-animated-2x: $img-stars-sprite-2x) {
   content: ' ';
   position: absolute;
-  display: none;
+  opacity: 0;
   width: $star-size;
   height:  $star-size;
   background-image: $img-animated;

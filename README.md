@@ -1,10 +1,12 @@
 # Starability.css - Accessible rating with animations on top
 
+![](https://raw.githubusercontent.com/LunarLogic/starability/master/gh-images/starability-showcase.gif)
+
 Accessible rating forms with cute animations on top. The name is the combination of two words: star and accessibility (or ability in general, whatever pleases you). Starability ratings are made with HTML, CSS (no JavaScript), and are accessible by keyboard, so even people using screen readers are able to use them. To achieve this effect I am using the sibling combinators technique that was introduced by [Lea Verou](http://lea.verou.me) in ["Accessible star rating widget with pure CSS" blogpost](http://lea.verou.me/2011/08/accessible-star-rating-widget-with-pure-css/), but it is bit upgraded: does not rely on a reverse order of the inputs, what makes it even more accessible. The goal of this small library was to combine the Lea's technique with neat animations and make it easy to quickly use it on your website.
 
-**Remember:** to submit the data you will need to add a bit of your own code. Here we have just a fieldset with a collection of radio buttons, neatly styled.
+**Remember:** to submit the data you will need to add a bit of your own code. Here we have just a fieldset with a collection of radio buttons, neatly styled. **There are no dependencies in this library.**
 
-**Important:** The library does not rely on a reverse order of inputs any more. This means that the issue with the keyboard arrows moving in a reverse direction is no longer there. It is strongly advised to update the HTML structure in your project, although the updated CSS doesn't break the functionality even for [the previous version of HTML markup](https://github.com/LunarLogic/starability/blob/f3b34818d6b704465278f69dde506c78a6a6f444/README.md#how-to-use).
+**Important:** Since version 2.0 the library does not rely on a reverse order of inputs. This means that the issue with the keyboard arrows moving in a reverse direction is no longer there. It is strongly advised to update the HTML structure in your project, although the updated CSS doesn't break the functionality even for [the previous version of HTML markup](https://github.com/LunarLogic/starability/blob/f3b34818d6b704465278f69dde506c78a6a6f444/README.md#how-to-use).
 
 ## Demo
 
@@ -28,6 +30,7 @@ If you have a different file structure, remember to update file path for CSS sty
 
     <fieldset class="starability-basic">
       <legend>First rating:</legend>
+      <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
       <input type="radio" id="first-rate1" name="rating" value="1" />
       <label for="first-rate1" title="Terrible">1 star</label>
       <input type="radio" id="first-rate2" name="rating" value="2" />
@@ -42,6 +45,7 @@ If you have a different file structure, remember to update file path for CSS sty
 
     <fieldset class="starability-basic">
       <legend>First rating:</legend>
+      <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
       <input type="radio" id="second-rate1" name="rating" value="1" />
       <label for="second-rate1" title="Terrible">1 star</label>
       <input type="radio" id="second-rate2" name="rating" value="2" />
@@ -55,8 +59,7 @@ If you have a different file structure, remember to update file path for CSS sty
     </fieldset>
     ```
 
-
-2. Add a stylesheet with a name of an animation that works best for your app name inside your website's <head> element. There are [the minified versions](https://github.com/LunarLogic/starability/tree/master/starability-minified) or [standard CSS files](https://github.com/LunarLogic/starability/tree/master/starability-css). Let's say we want a fading animation:
+2. Add a stylesheet with a name of an animation that works best for your app name inside your website's `<head>` element. There are [the minified versions](https://github.com/LunarLogic/starability/tree/master/starability-minified) or [standard CSS files](https://github.com/LunarLogic/starability/tree/master/starability-css). Let's say we want a fading animation:
 
     ```html
     <head>
@@ -91,6 +94,7 @@ For now you can choose one of the animations listed below. Go to the [demo](http
   - starability-checkmark
   - starability-heart
   - starability-heartbeat
+  - starability-coinFlip (by [Paulina Materna](https://github.com/paulinamaterna))
 
 ## Supported browsers
 
@@ -106,16 +110,32 @@ This rating system by default reacts to `:hover`, changing the background image 
 }
 ```
 
+## Disabling high contrast mode support
+
+This rating system by default supports high contrast mode for the Windows users. This means that if user is using high contrast mode, there is no star styling and the regular fieldset with checkboxes is displayed. It is not advised to turn this mode off, but it is possible to do that by setting the `$high-contrast-enabled` variable to `false` in [_variables.scss file](https://github.com/LunarLogic/starability/blob/master/starability-scss/_variables.scss)
+
+## Accessible outline
+
+By default, if user focuses with keyboard on the rating widget, there is an outline around all the stars to make it easier to navigate. This is not visible for users using only mouse. The function can be turned off by setting the `$accessible-focus-ring` variable to `false` in [_variables.scss file](https://github.com/LunarLogic/starability/blob/master/starability-scss/_variables.scss) and removing a span with `.starability-focus-ring` class from the HTML. It is not advised though to remove the outline.
+
+![](https://raw.githubusercontent.com/LunarLogic/starability/master/gh-images/starability-focus-ring.png)
+
+There is also another functionality that can be turned on by changing the `$accessible-outline` variable value to `true`. It will show an outline around active stars that are in the keyboard focus. It can enhance the widget's accessibility for some users.
+
+![](https://raw.githubusercontent.com/LunarLogic/starability/master/gh-images/starability-accessibility-outline.png)
+
 ## Showing the static rating result
 
 You can add the static results of the rating anywhere you need it. To indicate how many stars were added, change the `data-rating` value on an element with the `starability-result` class. Please note, that this supports only integer numbers. If you wish to show the results as the float numbers, you might need to use other solution.
 
 ```html
-  <p id="rated-element">Rated element name</p>
-  <div class="starability-result" data-rating="3" aria-describedby="rated-element">
-    3 stars
-  </div>
+  <h3>Rated element name</h3>
+  <p class="starability-result" data-rating="3">
+    Rated: 3 stars
+  </p>
 ```
+
+There is no official support for half-stars, as we don't want to make the library output bigger than needed, but you can easily add the support for showing half-stars in the rating results. To do so, [check the answer in this issue](https://github.com/LunarLogic/starability/issues/26#issuecomment-367013528).
 
 ## Further customisation with SASS
 
@@ -126,6 +146,20 @@ If you are not using SCSS syntax, you can also have a 10-star based system. Just
 ## Changelog
 
 Check what was changed in the newest version in the [Changelog](https://github.com/LunarLogic/starability/blob/master/CHANGELOG.md).
+
+## Contributors
+
+The library wouldn't be what it is now without:
+
+  - [Anna Migas](https://github.com/szynszyliszys)
+  - [Paulina Materna](https://github.com/paulinamaterna)
+  - [Scott O'Hara](https://github.com/scottaohara)
+  - [Mislav Marohnić](https://github.com/mislav)
+  - [Dan Dascalescu](https://github.com/dandv)
+  - [Steve Lacey](https://github.com/stevelacey)
+  - [Artur Parkhisenko](https://github.com/arturparkhisenko)
+  - [Barry Els](https://github.com/barryels)
+  - [Alex Carpenter](https://github.com/alexcarpenter)
 
 ## License
 
